@@ -1,0 +1,24 @@
+page-home {
+
+}
+
+.action-sheets-basic-page {
+  .action-sheet-cancel ion-icon,
+  .action-sheet-destructive ion-icon {
+    color: #ED4248;
+  }
+}
+
+.bottom_bar
+{
+  position: fixed;
+  height: 6vh;
+  bottom: 0;
+  width: 100%;
+  background: #FFF;
+  border-top: 1px solid #ccc;
+}
+
+ion-card {
+  height: auto;
+}
