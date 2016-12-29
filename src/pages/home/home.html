@@ -7,44 +7,26 @@
 <ion-content padding>
   <ion-item>
     <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
-    <ion-textarea rows="4"></ion-textarea>
+    <ion-textarea [(ngModel)]="this.request.message" rows="4"></ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label floating>Imię</ion-label>
-    <ion-input type="text"></ion-input>
+    <ion-input [(ngModel)]="this.request.name" type="text"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label floating>Email</ion-label>
-    <ion-input type="email"></ion-input>
+    <ion-input [(ngModel)]="this.request.email" type="email"></ion-input>
   </ion-item>
   <ion-item>
     <ion-grid>
       <ion-row>
-        <ion-col witdth-33 center text-center>
+        <ion-col witdth-33 center text-center *ngFor="let image of images; let i=index">
           <ion-card>
-            <button *ngIf="!base64Image[0]" ion-button icon-only (click)="openMenu()" class="imgPicker">
+            <button *ngIf="!image" ion-button icon-only (click)="openMenu(i)" class="imgPicker">
               <ion-icon  name="add-circle"></ion-icon>
             </button>
-            <img (click)="modifyPhoto(0)" [src]="base64Image[0]" *ngIf="base64Image[0]" />
-            <div *ngIf="!base64Image[0]">Dodaj zdjęcie</div>
-          </ion-card>
-        </ion-col>
-        <ion-col witdth-33 center text-center>
-          <ion-card>
-            <button *ngIf="!base64Image[1]" ion-button icon-only (click)="openMenu()" class="imgPicker">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-            <img (click)="modifyPhoto(1)" [src]="base64Image[1]" *ngIf="base64Image[1]" />
-            <div *ngIf="!base64Image[1]">Dodaj zdjęcie</div>
-          </ion-card>
-        </ion-col>
-        <ion-col witdth-33 center text-center>
-          <ion-card>
-            <button *ngIf="!base64Image[2]" ion-button icon-only (click)="openMenu()" class="imgPicker">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-            <img (click)="modifyPhoto(2)" [src]="base64Image[2]" *ngIf="base64Image[2]" />
-            <div *ngIf="!base64Image[2]">Dodaj zdjęcie</div>
+            <img (click)="modifyPhoto(i)" [src]="image" *ngIf="image" />
+            <div *ngIf="!image">Dodaj zdjęcie</div>
           </ion-card>
         </ion-col>
       </ion-row>
