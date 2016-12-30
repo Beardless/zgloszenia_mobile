@@ -5,33 +5,29 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
-    <ion-textarea [(ngModel)]="this.request.message" rows="4"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Imię</ion-label>
-    <ion-input [(ngModel)]="this.request.name" type="text"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label floating>Email</ion-label>
-    <ion-input [(ngModel)]="this.request.email" type="email"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-grid>
-      <ion-row>
-        <ion-col witdth-33 center text-center *ngFor="let image of images; let i=index">
-          <ion-card>
-            <button *ngIf="!image" ion-button icon-only (click)="openMenu(i)" class="imgPicker">
-              <ion-icon  name="add-circle"></ion-icon>
-            </button>
-            <img (click)="modifyPhoto(i)" [src]="image.source" *ngIf="image" />
-            <div *ngIf="!image">Dodaj zdjęcie</div>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
+  <ion-list no-lines>
+      <ion-item>
+        <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
+        <ion-textarea [(ngModel)]="this.request.message" rows="4"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Imię</ion-label>
+        <ion-input [(ngModel)]="this.request.name" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Email</ion-label>
+        <ion-input [(ngModel)]="this.request.email" type="email"></ion-input>
+      </ion-item>
+
+    <ion-item center text-center>
+      <ion-card *ngFor="let image of images; let i=index" >
+        <img (click)="modifyPhoto(i)" [src]="image.source"/>
+      </ion-card>
+      <button *ngIf="images.length <= 3" ion-button full (click)="openMenu()" class="imgPicker">
+        <ion-icon  name="add-circle"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-footer>

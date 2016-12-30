@@ -19,7 +19,7 @@ export class HomePage {
     uniqueId: ''
   };
   public uniqueId = this.guid();
-  public images: Array<Object>=[null,null,null];
+  public images: Array<Object>=[];
   constructor(
     storage: Storage,
     platform: Platform,
@@ -46,7 +46,7 @@ export class HomePage {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
-  takePicture(sourceType, i){
+  takePicture(sourceType){
     Camera.getPicture({
       sourceType: sourceType,
       destinationType: Camera.DestinationType.DATA_URL,
@@ -55,18 +55,18 @@ export class HomePage {
       // targetHeight: 1000
     }).then((imageData) => {
       // imageData is a base64 encoded string
-      this.images[i] = {
+      this.images[this.images.length] = {
         "source": "data:image/jpeg;base64," + imageData,
         "contentType": "image/jpeg"
       };
-      console.log(sourceType, i);
+      console.log(sourceType);
       console.log(this.images);
     }, (err) => {
       console.log(err);
     });
   }
 
-  openMenu(i) {
+  openMenu() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Modify your album',
       cssClass: 'action-sheets-basic-page',
@@ -75,13 +75,13 @@ export class HomePage {
           text: 'Aparat',
           icon: 'camera',
           handler: () => {
-            this.takePicture(Camera.PictureSourceType.CAMERA, i);
+            this.takePicture(Camera.PictureSourceType.CAMERA);
           }
         },{
           text: 'Galeria',
           icon: 'photos',
           handler: () => {
-            this.takePicture(Camera.PictureSourceType.SAVEDPHOTOALBUM, i);
+            this.takePicture(Camera.PictureSourceType.SAVEDPHOTOALBUM);
           }
         },{
           text: 'Anuluj',
@@ -105,7 +105,8 @@ export class HomePage {
           text: 'Usuń',
           icon: 'trash',
           handler: () => {
-            delete this.images[key];
+            this.images.splice(key, 1);
+            console.log(this.images)
           }
         },{
           text: 'Anuluj',
