@@ -43,6 +43,11 @@ page-home {
 
   .invalid {
     border: 1px solid #ea6153;
+    .label p {
+      color: #ea6153;
+      font-size: 18px;
+
+    }
   }
 
 }
@@ -52,5 +57,6 @@ ion-label{
 
 .imgPicker {
   font-size: 32px !important;
+  padding: 21px !important;
 }
 

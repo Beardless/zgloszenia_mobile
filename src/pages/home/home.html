@@ -6,19 +6,23 @@
 
 <ion-content padding>
   <ion-list no-lines>
+    <form [formGroup]="requestForm">
       <ion-item>
         <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
-        <ion-textarea [(ngModel)]="this.request.message" rows="4"></ion-textarea>
+        <ion-textarea formControlName="message" [(ngModel)]="this.request.message" [class.invalid]="!requestForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
+      </ion-item>
+      <ion-item class="invalid" *ngIf="!requestForm.controls.message.valid && submitAttempt">
+        <p>Musisz wypełnić pole treści zgłoszenia!</p>
       </ion-item>
       <ion-item>
         <ion-label floating>Imię</ion-label>
-        <ion-input [(ngModel)]="this.request.name" type="text"></ion-input>
+        <ion-input formControlName="name" [(ngModel)]="this.request.name" type="text"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label floating>Email</ion-label>
-        <ion-input [(ngModel)]="this.request.email" type="email"></ion-input>
+        <ion-input formControlName="email" [(ngModel)]="this.request.email" type="email"></ion-input>
       </ion-item>
-
+    </form>
     <ion-item center text-center>
       <ion-card *ngFor="let image of images; let i=index" >
         <img (click)="modifyPhoto(i)" [src]="image.source"/>
@@ -32,6 +36,6 @@
 
 <ion-footer>
   <div class="bottom_bar">
-    <button class="fab_bottom_center_btn" ion-button full color="secondary">Wyślij</button>
+    <button class="fab_bottom_center_btn" (click)="send()" ion-button full color="secondary">Wyślij</button>
   </div>
 </ion-footer>

@@ -4,6 +4,7 @@ import { ActionSheetController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 
@@ -12,6 +13,8 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  requestForm: FormGroup;
+  submitAttempt: boolean = false;
   public request = {
     name: '',
     email: '',
@@ -24,7 +27,14 @@ export class HomePage {
     storage: Storage,
     platform: Platform,
     public navCtrl: NavController,
-    public actionSheetCtrl: ActionSheetController) {
+    public actionSheetCtrl: ActionSheetController,
+    public formBuilder: FormBuilder) {
+
+    this.requestForm = formBuilder.group({
+      message: ['', Validators.required],
+      name: [''],
+      email: ['']
+    });
 
     platform.ready().then((readySource) => {
       storage.get('userId').then((val) => {
@@ -34,6 +44,15 @@ export class HomePage {
         }
       })
     });
+  }
+
+  send(){
+    this.submitAttempt = true;
+
+    if(this.requestForm.valid){
+      console.log("success!")
+      console.log(this.requestForm.value);
+    }
   }
 
   guid() {
