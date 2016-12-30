@@ -3,6 +3,8 @@ import { Camera } from 'ionic-native';
 import { ActionSheetController } from 'ionic-angular';
 import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 
 
 @Component({
@@ -13,25 +15,50 @@ export class HomePage {
   public request = {
     name: '',
     email: '',
-    message: ''
+    message: '',
+    uniqueId: ''
   };
-  public images: Array<string>=[null,null,null];
-  constructor(platform: Platform, public navCtrl: NavController, public actionSheetCtrl: ActionSheetController) {
+  public uniqueId = this.guid();
+  public images: Array<Object>=[null,null,null];
+  constructor(
+    storage: Storage,
+    platform: Platform,
+    public navCtrl: NavController,
+    public actionSheetCtrl: ActionSheetController) {
+
     platform.ready().then((readySource) => {
-      console.log('Platform ready from', readySource);
-      // Platform now ready, execute any required native code
+      storage.get('userId').then((val) => {
+        this.request.uniqueId = val;
+        if (null === val) {
+          storage.set('userId', this.uniqueId);
+        }
+      })
     });
+  }
+
+  guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
   takePicture(sourceType, i){
     Camera.getPicture({
       sourceType: sourceType,
-      destinationType: Camera.DestinationType.DATA_URL
+      destinationType: Camera.DestinationType.DATA_URL,
+      encodingType: Camera.EncodingType.JPEG
       // targetWidth: 1000,
       // targetHeight: 1000
     }).then((imageData) => {
       // imageData is a base64 encoded string
-      this.images[i] = "data:image/jpeg;base64," + imageData;
+      this.images[i] = {
+        "source": "data:image/jpeg;base64," + imageData,
+        "contentType": "image/jpeg"
+      };
       console.log(sourceType, i);
       console.log(this.images);
     }, (err) => {

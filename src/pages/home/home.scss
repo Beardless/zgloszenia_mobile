@@ -13,12 +13,17 @@ page-home {
 {
   position: fixed;
   height: 6vh;
-  bottom: 0;
+  bottom: 5%;
   width: 100%;
-  background: #FFF;
+  background: #ED4248;
   border-top: 1px solid #ccc;
 }
 
 ion-card {
   height: auto;
+}
+
+.fab_bottom_center_btn {
+  background: #ED4248;
+  color: black;
 }

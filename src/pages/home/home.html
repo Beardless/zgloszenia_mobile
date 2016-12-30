@@ -25,7 +25,7 @@
             <button *ngIf="!image" ion-button icon-only (click)="openMenu(i)" class="imgPicker">
               <ion-icon  name="add-circle"></ion-icon>
             </button>
-            <img (click)="modifyPhoto(i)" [src]="image" *ngIf="image" />
+            <img (click)="modifyPhoto(i)" [src]="image.source" *ngIf="image" />
             <div *ngIf="!image">Dodaj zdjęcie</div>
           </ion-card>
         </ion-col>
@@ -36,8 +36,6 @@
 
 <ion-footer>
   <div class="bottom_bar">
-    <ion-fab bottom center>
-      <button ion-fab color="secondary">Wyślij</button>
-    </ion-fab>
+    <button class="fab_bottom_center_btn" ion-button full color="secondary">Wyślij</button>
   </div>
 </ion-footer>
