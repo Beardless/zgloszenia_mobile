@@ -1,0 +1,9 @@
+<ion-item style="width: 85%; margin: 0px auto;" center text-center>
+  <ion-card *ngFor="let image of this.imageProvider.getImages(); let i=index" >
+    <img (click)="modifyPhoto(i)" [src]="image.source" />
+  </ion-card>
+</ion-item>
+
+<button *ngIf="this.imageProvider.getImages().length <= 3" ion-button full (click)="openMenu()" class="imgPicker">
+  <ion-icon  name="add-circle"></ion-icon>
+</button>

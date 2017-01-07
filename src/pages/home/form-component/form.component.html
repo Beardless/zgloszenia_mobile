@@ -1,0 +1,17 @@
+<form [formGroup]="this.formProvider.requestForm">
+  <ion-item>
+    <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
+    <ion-textarea formControlName="message" [(ngModel)]="this.formProvider.request.message" [class.invalid]="!this.formProvider.requestForm.controls.message.valid && this.formProvider.submitAttempt" rows="4"></ion-textarea>
+  </ion-item>
+  <ion-item class="invalid" *ngIf="!this.formProvider.requestForm.controls.message.valid && this.formProvider.submitAttempt">
+    <p>Musisz wypełnić pole treści zgłoszenia!</p>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Imię</ion-label>
+    <ion-input formControlName="name" [(ngModel)]="this.formProvider.request.name" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Email</ion-label>
+    <ion-input formControlName="email" [(ngModel)]="this.formProvider.request.email" type="email"></ion-input>
+  </ion-item>
+</form>
