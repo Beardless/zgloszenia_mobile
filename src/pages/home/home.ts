@@ -3,11 +3,15 @@ import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { FormProvider } from  './providers/form-provider';
 import { ImageProvider } from './providers/image-provider';
+import { FormComponent } from './form-component/form.component';
+import { SendProvider } from './providers/send-provider';
+import {Observable} from "rxjs/Rx";
+
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [FormProvider, ImageProvider]
+  providers: [ImageProvider, FormComponent, SendProvider]
 })
 export class HomePage {
   public uniqueId = this.guid();
@@ -15,25 +19,18 @@ export class HomePage {
     storage: Storage,
     platform: Platform,
     public formProvider: FormProvider,
-    public imageProvider: ImageProvider
+    public imageProvider: ImageProvider,
+    public formComponent: FormComponent,
+    public sendProvider: SendProvider
     ) {
     platform.ready().then((readySource) => {
       storage.get('userId').then((val) => {
-        this.formProvider.request.uniqueId = val;
+        this.formProvider.get().uniqueId = val;
         if (null === val) {
-          storage.set('userId', this.formProvider.request.uniqueId);
+          storage.set('userId', this.formProvider.get().uniqueId);
         }
       })
     });
-  }
-
-  send(){
-    this.formProvider.submitAttempt = true;
-
-    if(this.formProvider.requestForm.valid){
-      console.log("success!");
-      console.log(this.formProvider.requestForm);
-    }
   }
 
   guid() {
@@ -45,5 +42,20 @@ export class HomePage {
 
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
+
+  // send(data) {
+  //   console.log(this.formProvider);
+  //   this.sendProvider.send(data).subscribe(
+  //     data => {
+  //       console.log(data);
+  //       return true;
+  //     },
+  //     error => {
+  //       console.error("Error");
+  //       return Observable.throw(error);
+  //     }
+  //   );
+  //
+  // }
 
 }

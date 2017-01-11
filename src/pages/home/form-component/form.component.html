@@ -1,17 +1,22 @@
-<form [formGroup]="this.formProvider.requestForm">
-  <ion-item>
+<form [formGroup]="sendForm">
+  <ion-item class="form-group">
     <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
-    <ion-textarea formControlName="message" [(ngModel)]="this.formProvider.request.message" [class.invalid]="!this.formProvider.requestForm.controls.message.valid && this.formProvider.submitAttempt" rows="4"></ion-textarea>
+    <ion-textarea class="form-control" [(ngModel)]="this.formProvider.get().message" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
   </ion-item>
-  <ion-item class="invalid" *ngIf="!this.formProvider.requestForm.controls.message.valid && this.formProvider.submitAttempt">
-    <p>Musisz wypełnić pole treści zgłoszenia!</p>
+
+  <ion-item *ngIf="!sendForm.controls.message.valid  && submitAttempt"
+       class="alert">
+    Musisz wypełnić pole treści zgłoszenia!
   </ion-item>
-  <ion-item>
+  <ion-item class="form-group">
     <ion-label floating>Imię</ion-label>
-    <ion-input formControlName="name" [(ngModel)]="this.formProvider.request.name" type="text"></ion-input>
+    <ion-input class="form-control" [(ngModel)]="this.formProvider.get().name" name="name" formControlName="name" type="text"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item class="form-group">
     <ion-label floating>Email</ion-label>
-    <ion-input formControlName="email" [(ngModel)]="this.formProvider.request.email" type="email"></ion-input>
+    <ion-input class="form-control" [(ngModel)]="this.formProvider.get().email" name="email" formControlName="email" type="email"></ion-input>
   </ion-item>
 </form>
+
+
+

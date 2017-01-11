@@ -8,19 +8,12 @@
   <ion-list no-lines>
     <form-component></form-component>
     <image-component></image-component>
-    <!--<ion-item center text-center>-->
-      <!--<ion-card *ngFor="let image of images; let i=index" >-->
-        <!--<img (click)="modifyPhoto(i)" [src]="image.source"/>-->
-      <!--</ion-card>-->
-      <!--<button *ngIf="images.length <= 3" ion-button full (click)="openMenu()" class="imgPicker">-->
-        <!--<ion-icon  name="add-circle"></ion-icon>-->
-      <!--</button>-->
-    <!--</ion-item>-->
   </ion-list>
 </ion-content>
 
-<ion-footer>
-  <div class="bottom_bar">
-    <button class="fab_bottom_center_btn" (click)="this.send()" ion-button full color="secondary">Wyślij</button>
-  </div>
+<ion-footer class="bottom_bar">
+  <ion-fab center bottom>
+    <button ion-fab color="danger" (click)="this.formComponent.send(this.formProvider.get())">Wyślij</button>
+  </ion-fab>
 </ion-footer>
+

@@ -20,8 +20,6 @@ export class ImageComponent {
       sourceType: sourceType,
       destinationType: Camera.DestinationType.FILE_URI,
       encodingType: Camera.EncodingType.JPEG
-      //targetWidth: 150,
-      //targetHeight: 300
     }).then((imageData) => {
       this.imageProvider.add(imageData);
     }, (err) => {
