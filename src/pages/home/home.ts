@@ -5,7 +5,6 @@ import { FormProvider } from  './providers/form-provider';
 import { ImageProvider } from './providers/image-provider';
 import { FormComponent } from './form-component/form.component';
 import { SendProvider } from './providers/send-provider';
-import {Observable} from "rxjs/Rx";
 
 
 @Component({

@@ -10,15 +10,20 @@ import {Observable} from "rxjs/Rx";
   templateUrl: 'form.component.html',
   providers: [ SendProvider],
   styles: [`
-page-home{
-        ion-input, ion-select, ion-textarea {
-              background-color: #f2f2f2;
-              padding: 5px 10px;
-          }
-        .invalid {
-              border: 1px solid #ea6153;
-          }
-        }
+    .alert{
+      color: #ea6153;
+    }
+    .invalid {
+          border: 1px solid #ea6153;
+      }
+    .bottom_bar
+    {
+      position: fixed;
+      height: 6vh;
+      width: 100%;
+      background: #ED4248;
+      border-top: 1px solid #ccc;
+    }
   `]
 })
 @Injectable()
