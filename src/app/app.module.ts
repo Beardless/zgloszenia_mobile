@@ -7,7 +7,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FormComponent } from '../pages/home/form-component/form.component';
 import { ImageComponent } from '../pages/home/image-component/image.component';
-import {FormProvider} from "../pages/home/providers/form-provider";
+import { FormProvider } from "../pages/home/providers/form-provider";
+import { ImageProvider } from '../pages/home/providers/image-provider';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {FormProvider} from "../pages/home/providers/form-provider";
     FormComponent
   ],
   providers: [
+    ImageProvider,
     FormProvider,
     Storage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}]

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ImageProvider } from './image-provider';
 
 @Injectable()
 export class FormProvider {
@@ -8,11 +9,10 @@ export class FormProvider {
     message: '',
     uniqueId: ''
   };
-  constructor(){
+  constructor(public imageProvider: ImageProvider){
   }
 
   get(){
     return this.request;
-  }
-
+  };
 }

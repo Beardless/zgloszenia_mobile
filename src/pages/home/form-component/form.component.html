@@ -1,7 +1,7 @@
 <form [formGroup]="sendForm">
   <ion-item class="form-group">
     <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
-    <ion-textarea class="form-control" [(ngModel)]="this.formProvider.get().message" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
+    <ion-textarea [(ngModel)]="this.formProvider.get().message" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
   </ion-item>
 
   <ion-item *ngIf="!sendForm.controls.message.valid  && submitAttempt"
@@ -10,11 +10,14 @@
   </ion-item>
   <ion-item class="form-group">
     <ion-label floating>Imię</ion-label>
-    <ion-input class="form-control" [(ngModel)]="this.formProvider.get().name" name="name" formControlName="name" type="text"></ion-input>
+    <ion-input [(ngModel)]="this.formProvider.get().name" name="name" formControlName="name" type="text"></ion-input>
   </ion-item>
   <ion-item class="form-group">
     <ion-label floating>Email</ion-label>
-    <ion-input class="form-control" [(ngModel)]="this.formProvider.get().email" name="email" formControlName="email" type="email"></ion-input>
+    <ion-input [(ngModel)]="this.formProvider.get().email" name="email" formControlName="email" type="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion
   </ion-item>
   <ion-footer class="bottom_bar">
     <ion-fab center bottom>

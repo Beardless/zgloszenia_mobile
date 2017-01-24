@@ -2,26 +2,27 @@ import { Component, Injectable } from '@angular/core';
 import { FormProvider } from  './../providers/form-provider';
 import { SendProvider } from './../providers/send-provider';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {Observable} from "rxjs/Rx";
+import { ImageProvider } from './../providers/image-provider';
+import { Observable } from "rxjs/Rx";
+import { Transfer, FilePath } from 'ionic-native';
 
 
 @Component({
   selector: 'form-component',
   templateUrl: 'form.component.html',
-  providers: [ SendProvider],
   styles: [`
     .alert{
-      color: #ea6153;
+        color: #f53d3d;
     }
     .invalid {
-          border: 1px solid #ea6153;
+          border: 1px solid #f53d3d;
       }
     .bottom_bar
     {
       position: fixed;
-      height: 6vh;
+      height: 56px;
       width: 100%;
-      background: #ED4248;
+      background: #fff;
       border-top: 1px solid #ccc;
     }
   `]
@@ -33,7 +34,8 @@ export class FormComponent {
   constructor(
     public formProvider: FormProvider,
     public sendProvider: SendProvider,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public imageProvider: ImageProvider
   ){
     this.sendForm = formBuilder.group({
       message: ['', Validators.required],
@@ -44,26 +46,53 @@ export class FormComponent {
 
   send() {
     this.submitAttempt = true;
-    if(!this.sendForm.valid){
-      console.log("success!")
-      console.log(this.sendForm.value);
+    if (this.sendForm.valid) {
+      this.sendProvider.send(this.formProvider.get()).subscribe(
+        data => {
+          this.formProvider.get().message = null;
+          this.formProvider.get().name = null;
+          this.formProvider.get().email = null
+
+          var url = "http://mockbin.org/bin/8b455293-429e-41da-9fd4-a1ac2f788405";
+          const fileTransfer = new Transfer();
+
+          this.imageProvider.loading = this.imageProvider.loadingCtrl.create({
+            content: 'Uploading...',
+          });
+          this.imageProvider.loading.present();
+          console.log(this.imageProvider.getImages());
+          this.imageProvider.getImages().forEach(function (image) {
+              console.log(image);
+              FilePath.resolveNativePath(image['orginal_path'])
+              .then(filePath => {
+                console.log(filePath);
+                fileTransfer.upload(filePath, url, {
+                  fileKey: "file",
+                  fileName: 'test_name',
+                  chunkedMode: false,
+                  mimeType: "multipart/form-data",
+                  params : {'fileName': 'test_name'}
+                }).then(data => {
+                  console.log(data);
+                  this.imageProvider.loading.dismissAll()
+                  // this.imageProvider.presentToast('Image succesful uploaded.');
+                }, err => {
+                  // this.imageProvider.loading.dismissAll()
+                  console.log(err);
+                  // this.imageProvider.presentToast('Error while uploading file.');
+                });
+              })
+          });
+        },
+        error => {
+          console.log(error);
+          return Observable.throw(error)
+        }
+      );
     }
-    console.log(this.formProvider);
-    this.sendProvider.send(this.formProvider.get()).subscribe(
-      data => {
-        this.formProvider.get().message = null;
-        this.formProvider.get().name = null;
-        this.formProvider.get().email = null;
-        console.log(data);
-        return true;
-      },
-      error => {
-        console.error("Error");
-        return Observable.throw(error);
-      }
-    );
-
+    else {
+      console.log("error");
+    }
   }
-
 
 }

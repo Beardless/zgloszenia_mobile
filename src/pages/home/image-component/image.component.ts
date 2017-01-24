@@ -1,29 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Camera } from 'ionic-native';
 import { ImageProvider } from "../providers/image-provider";
 import { ActionSheetController } from 'ionic-angular';
 
+// declare var cordova: any;
 
+@Injectable()
 @Component({
   selector: 'image-component',
   templateUrl: 'image.component.html',
-  providers: [ImageProvider]
+  // providers: [ImageProvider]
 })
+
 export class ImageComponent {
   constructor(
       public imageProvider: ImageProvider,
-      public actionSheetCtrl: ActionSheetController
-  ){}
+      public actionSheetCtrl: ActionSheetController,
+      ){}
 
   takePicture(sourceType){
-    Camera.getPicture({
-      sourceType: sourceType,
-      destinationType: Camera.DestinationType.FILE_URI,
-      encodingType: Camera.EncodingType.JPEG
-    }).then((imageData) => {
+  let options = {
+    sourceType: sourceType,
+    destinationType: Camera.DestinationType.FILE_URI,
+    encodingType: Camera.EncodingType.JPEG,
+    saveToPhotoAlbum: false,
+  }
+    Camera.getPicture(options).then((imageData) => {
       this.imageProvider.add(imageData);
     }, (err) => {
       console.log(err);
+      this.imageProvider.presentToast('Error while selecting image.');
     });
   }
 
