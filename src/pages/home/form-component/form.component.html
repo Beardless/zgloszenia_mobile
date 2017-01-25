@@ -17,7 +17,13 @@
     <ion-input [(ngModel)]="this.formProvider.get().email" name="email" formControlName="email" type="email"></ion-input>
   </ion-item>
   <ion-item>
-    <ion
+    <ion-label>Temat zgłoszenia:</ion-label>
+    <ion-select [(ngModel)]="this.formProvider.get().select" formControlName="select">
+      <ion-option selected=”true”>Pupil</ion-option>
+      <ion-option>Noworodek</ion-option>
+      <ion-option>Zażalenie</ion-option>
+      <ion-option>Temat na artykuł</ion-option>
+    </ion-select>
   </ion-item>
   <ion-footer class="bottom_bar">
     <ion-fab center bottom>

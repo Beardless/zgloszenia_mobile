@@ -5,6 +5,7 @@ import { FormProvider } from  './providers/form-provider';
 import { ImageProvider } from './providers/image-provider';
 import { FormComponent } from './form-component/form.component';
 import { SendProvider } from './providers/send-provider';
+import { Splashscreen } from 'ionic-native';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class HomePage {
     public sendProvider: SendProvider
     ) {
     platform.ready().then((readySource) => {
-      storage.get('userId').then((val) => {
+        storage.get('userId').then((val) => {
         this.formProvider.get().uniqueId = val;
         if (null === val) {
           storage.set('userId', this.formProvider.get().uniqueId);

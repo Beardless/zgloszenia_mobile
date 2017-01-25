@@ -7,6 +7,7 @@ export class FormProvider {
     name: '',
     email: '',
     message: '',
+    select: '',
     uniqueId: ''
   };
   constructor(public imageProvider: ImageProvider){
