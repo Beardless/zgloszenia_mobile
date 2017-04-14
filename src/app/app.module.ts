@@ -1,8 +1,9 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { FormComponent } from '../pages/home/form-component/form.component';
@@ -18,9 +19,11 @@ import { ImageProvider } from '../pages/home/providers/image-provider';
     ImageComponent
   ],
   imports: [
+    BrowserModule,
     FormsModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -31,7 +34,6 @@ import { ImageProvider } from '../pages/home/providers/image-provider';
   providers: [
     ImageProvider,
     FormProvider,
-    Storage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

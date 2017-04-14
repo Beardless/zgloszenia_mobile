@@ -6,7 +6,7 @@ declare var cordova: any;
 
 @Injectable()
 export class ImageProvider {
-  images: Array<Object>=[];
+  protected images: Array<Object>=[];
   constructor(
     public sanitizer: DomSanitizer,
     public toastCtrl: ToastController,

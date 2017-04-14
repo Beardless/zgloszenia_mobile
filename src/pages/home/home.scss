@@ -5,15 +5,6 @@
   }
 }
 
-// .bottom_bar
-// {
-//   position: fixed;
-//   height: 6vh;
-//   width: 100%;
-//   background: #ED4248;
-//   border-top: 1px solid #ccc;
-// }
-
 ion-card {
   height: auto;
 }
@@ -29,4 +20,8 @@ ion-label{
 .imgPicker {
   font-size: 32px !important;
   padding: 21px !important;
+}
+.buttonText {
+  padding: 8px;
+  font-size: 16px;
 }

@@ -4,7 +4,8 @@
   </ion-card>
 </ion-item>
 
-<button *ngIf="this.imageProvider.getImages().length <= 3" ion-button full (click)="openMenu()" class="imgPicker">
+<button *ngIf="this.imageProvider.getImages().length < 3" ion-button full (click)="openMenu()" class="imgPicker">
   <ion-icon  name="add-circle"></ion-icon>
+  <p class="buttonText">Dodaj Zdjęcie</p>
 </button>
 <div style="height:50px;"></div>

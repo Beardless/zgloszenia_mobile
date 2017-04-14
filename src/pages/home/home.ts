@@ -11,7 +11,7 @@ import { Splashscreen } from 'ionic-native';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [ImageProvider, FormComponent, SendProvider]
+  providers: [FormComponent, SendProvider]
 })
 export class HomePage {
   public uniqueId = this.guid();
@@ -26,8 +26,9 @@ export class HomePage {
     platform.ready().then((readySource) => {
         storage.get('userId').then((val) => {
         this.formProvider.get().uniqueId = val;
+        console.log(this.uniqueId);
         if (null === val) {
-          storage.set('userId', this.formProvider.get().uniqueId);
+          storage.set('userId', this.uniqueId);
         }
       })
     });

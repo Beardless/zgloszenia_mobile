@@ -1,6 +1,6 @@
 <form [formGroup]="sendForm">
   <ion-item class="form-group">
-    <ion-label floating>Treść zgłoszenia(wymagane)</ion-label>
+    <ion-label stacked>Treść zgłoszenia(wymagane)</ion-label>
     <ion-textarea [(ngModel)]="this.formProvider.get().message" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
   </ion-item>
 
@@ -9,11 +9,11 @@
     Musisz wypełnić pole treści zgłoszenia!
   </ion-item>
   <ion-item class="form-group">
-    <ion-label floating>Imię</ion-label>
+    <ion-label stacked>Imię</ion-label>
     <ion-input [(ngModel)]="this.formProvider.get().name" name="name" formControlName="name" type="text"></ion-input>
   </ion-item>
   <ion-item class="form-group">
-    <ion-label floating>Email</ion-label>
+    <ion-label stacked>Email</ion-label>
     <ion-input [(ngModel)]="this.formProvider.get().email" name="email" formControlName="email" type="email"></ion-input>
   </ion-item>
   <ion-item>

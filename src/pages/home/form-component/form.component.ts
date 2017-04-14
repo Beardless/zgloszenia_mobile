@@ -56,23 +56,26 @@ export class FormComponent {
     this.submitAttempt = true;
     if (this.sendForm.valid) {
       console.log(this.formProvider.get());
+      let that = this;
       this.sendProvider.send(this.formProvider.get()).subscribe(
         data => {
           this.formProvider.get().message = null;
           this.formProvider.get().name = null;
           this.formProvider.get().email = null;
           this.formProvider.get().select = null;
-          var url = "http://mockbin.org/bin/8b455293-429e-41da-9fd4-a1ac2f788405";
+          var url = "http://10.0.2.2:3000/request";
           const fileTransfer = new Transfer();
 
           let loading = this.loadingCtrl.create({
             content: 'Uploading...',
           });
+
           loading.present();
-          console.log(this.imageProvider.getImages());
-          this.imageProvider.getImages().forEach(function (image) {
-              console.log(image);
-              FilePath.resolveNativePath(image['orginal_path'])
+          //console.log(this.imageProvider.getImages());
+          let upload = function (images){
+            var image = images[0];
+            console.log('b4 then', image, images);
+            FilePath.resolveNativePath(image['orginal_path'])
               .then(filePath => {
                 console.log(filePath);
                 fileTransfer.upload(filePath, url, {
@@ -82,26 +85,32 @@ export class FormComponent {
                   mimeType: "multipart/form-data",
                   params : {'fileName': 'test_name'}
                 }).then(data => {
-                  console.log(data);
-                  loading.dismiss()
-                  // this.imageProvider.presentToast('Image succesful uploaded.');
+                  console.log('data', data);
+                  console.log('imageProvider', that.imageProvider.getImages(), that.imageProvider.getImages().length);
+                  that.imageProvider.remove(0);
+                  if (that.imageProvider.getImages().length > 0){
+                    console.log('after remove', that.imageProvider.getImages());
+                    upload(that.imageProvider.getImages());
+                  } else {
+                    console.log('work');
+                    loading.dismiss();
+                  }
                 }, err => {
-                  // this.imageProvider.loading.dismissAll()
                   console.log(err);
-                  // this.imageProvider.presentToast('Error while uploading file.');
                 });
               })
-          });
+          }
+          console.log('send first image');
+          upload(this.imageProvider.getImages());
+          loading.dismiss();
         },
         error => {
           console.log(error);
-          return Observable.throw(error)
+          //return Observable.throw(error)
         }
       );
-    }
-    else {
+    } else {
       console.log("error");
     }
   }
-
 }
