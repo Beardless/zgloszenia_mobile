@@ -94,7 +94,9 @@ export class FormComponent {
                     this.formProvider.get().email = null;
                     this.formProvider.get().select = null;
 
-                    this.upload(data.requestId);
+                    if (this.imageProvider.getImages().length > 0){
+                        this.upload(data.requestId);
+                    }
                 },
                 error => {
                     console.log(error);
