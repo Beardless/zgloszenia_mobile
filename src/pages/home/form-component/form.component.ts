@@ -52,9 +52,11 @@ export class FormComponent {
         });
     }
 
-    upload(images){
-        var image = images[0];
+    upload(requestId){
+        var image = this.imageProvider.getImages()[0];
         const fileTransfer = new Transfer();
+
+        // Show Loading popup
         let loading = this.loadingCtrl.create({
             content: 'Wysyłanie...',
         });
@@ -67,28 +69,24 @@ export class FormComponent {
             mimeType: "multipart/form-data",
             params : {'fileName': 'test_name'}
         }).then(data => {
-            console.log('data', data);
-            console.log('imageProvider', this.imageProvider.getImages(), this.imageProvider.getImages().length);
             this.imageProvider.remove(0);
-            if (this.imageProvider.getImages().length > 0){
-                console.log('after remove', this.imageProvider.getImages());
-                this.upload(this.imageProvider.getImages());
-            } else {
-                console.log('done');
-                this.submitAttempt = false;
-                loading.dismiss();
 
-                // POST with info about end of files
+            if (this.imageProvider.getImages().length > 0){
+                this.upload(requestId);
             }
+            
+            this.submitAttempt = false;
+            loading.dismiss();
+            console.log(data);
         }, err => {
             console.log(err);
         });
+        console.log(fileTransfer);
     }
 
     send() {
         this.submitAttempt = true;
         if (this.sendForm.valid) {
-            console.log(this.formProvider.get());
             this.sendProvider.send(this.formProvider.get()).subscribe(
                 data => {
                     this.formProvider.get().message = null;
@@ -96,33 +94,14 @@ export class FormComponent {
                     this.formProvider.get().email = null;
                     this.formProvider.get().select = null;
 
-                    this.upload(this.imageProvider.getImages());
+                    this.upload(data.requestId);
                 },
                 error => {
                     console.log(error);
                 }
             );
-            console.log('send first image');
         } else {
             console.log("error");
         }
     }
 }
-
-/**
- *
- * POST /zgloszenia
- *
- *  formularz z danymi zgłoszenia
- *  w odpowiedzi zwracasz ID zgłoszenia
- *
- * POST /zgloszenia/{id}
- *
- *  zdjęcia do tego zgłoszenia
- *
- * POST /zgloszenia/{id}/send
- *
- *  server tworzy maila i wysyła go na ustalony adres
- *
- *
- */
