@@ -3,13 +3,10 @@ import { Camera } from 'ionic-native';
 import { ImageProvider } from "../providers/image-provider";
 import { ActionSheetController } from 'ionic-angular';
 
-// declare var cordova: any;
-
 @Injectable()
 @Component({
   selector: 'image-component',
   templateUrl: 'image.component.html',
-  // providers: [ImageProvider]
 })
 
 export class ImageComponent {
@@ -19,23 +16,23 @@ export class ImageComponent {
       ){}
 
   takePicture(sourceType){
-  let options = {
-    sourceType: sourceType,
-    destinationType: Camera.DestinationType.FILE_URI,
-    encodingType: Camera.EncodingType.JPEG,
-    saveToPhotoAlbum: false,
-  }
+    let options = {
+      sourceType: sourceType,
+      destinationType: Camera.DestinationType.FILE_URI,
+      encodingType: Camera.EncodingType.JPEG,
+      saveToPhotoAlbum: false,
+    }
+
     Camera.getPicture(options).then((imageData) => {
       this.imageProvider.add(imageData);
     }, (err) => {
-      console.log(err);
-      this.imageProvider.presentToast('Error while selecting image.');
+      this.imageProvider.presentToast('Wystąpił błąd podczas wybierania zdjęcia.');
     });
   }
 
   openMenu() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Modify your album',
+      title: 'Wybierz źródło zdjęć',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
@@ -65,7 +62,7 @@ export class ImageComponent {
 
   modifyPhoto(key){
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Modify your album',
+      title: 'Zdecyduj co zrobić',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
@@ -85,7 +82,5 @@ export class ImageComponent {
       ]
     });
     actionSheet.present();
-
   }
-
 }
