@@ -10,7 +10,7 @@ export class SendProvider {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify(data);
-    return this.http.post('http://10.0.2.2:3000/request', body, options)
+    return this.http.post('http://mockbin.org/bin/6acc292c-ff94-40bb-ab82-e804008639d8', body, options)
       .map((res: Response) => res.json());
   }
 }
