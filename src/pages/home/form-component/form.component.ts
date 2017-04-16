@@ -76,10 +76,8 @@ export class FormComponent {
                 this.loading.dismiss();
             }
         }, err => {
-            console.log(err);
             this.loading.dismiss();
         });
-        console.log(fileTransfer);
     }
 
     send() {
