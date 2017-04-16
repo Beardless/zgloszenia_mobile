@@ -6,7 +6,6 @@ import { ImageProvider } from './../providers/image-provider';
 import { Transfer } from 'ionic-native';
 import { LoadingController } from 'ionic-angular';
 
-
 @Component({
     selector: 'form-component',
     templateUrl: 'form.component.html',
@@ -36,6 +35,7 @@ import { LoadingController } from 'ionic-angular';
 export class FormComponent {
     sendForm: FormGroup;
     submitAttempt: boolean = false;
+    loading: any;
 
     constructor(
         public formProvider: FormProvider,
@@ -50,36 +50,34 @@ export class FormComponent {
             email: [''],
             select: ['']
         });
+
+        // Show Loading popup
+        this.loading = this.loadingCtrl.create({
+            content: 'Wysyłanie...',
+        });
     }
 
     upload(requestId){
         var image = this.imageProvider.getImages()[0];
         const fileTransfer = new Transfer();
 
-        // Show Loading popup
-        let loading = this.loadingCtrl.create({
-            content: 'Wysyłanie...',
-        });
-        loading.present();
-
-        fileTransfer.upload(image.filePath, "http://mockbin.org/bin/6acc292c-ff94-40bb-ab82-e804008639d8", {
+        fileTransfer.upload(image.filePath, "http://reporter.24wspolnota.pl/request/"+requestId, {
             fileKey: "file",
-            fileName: 'test_name',
+            fileName: 'image'+this.imageProvider.getImages().length+'.jpg',
             chunkedMode: false,
             mimeType: "multipart/form-data",
             params : {'fileName': 'test_name'}
         }).then(data => {
             this.imageProvider.remove(0);
-
             if (this.imageProvider.getImages().length > 0){
                 this.upload(requestId);
+            } else {
+                this.submitAttempt = false;
+                this.loading.dismiss();
             }
-            
-            this.submitAttempt = false;
-            loading.dismiss();
-            console.log(data);
         }, err => {
             console.log(err);
+            this.loading.dismiss();
         });
         console.log(fileTransfer);
     }
@@ -87,15 +85,19 @@ export class FormComponent {
     send() {
         this.submitAttempt = true;
         if (this.sendForm.valid) {
+            this.loading.present();
             this.sendProvider.send(this.formProvider.get()).subscribe(
                 data => {
-                    this.formProvider.get().message = null;
+                    this.formProvider.get().message = '';
                     this.formProvider.get().name = null;
                     this.formProvider.get().email = null;
                     this.formProvider.get().select = null;
 
                     if (this.imageProvider.getImages().length > 0){
                         this.upload(data.requestId);
+                    } else {
+                        this.submitAttempt = false;
+                        this.loading.dismiss();
                     }
                 },
                 error => {

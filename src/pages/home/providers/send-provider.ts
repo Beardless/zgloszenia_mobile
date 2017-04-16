@@ -12,7 +12,7 @@ export class SendProvider {
 
     return this.http
         .post(
-            'http://mockbin.org/bin/6acc292c-ff94-40bb-ab82-e804008639d8',
+            'http://reporter.24wspolnota.pl/request/',
             JSON.stringify(data),
             options
         )
