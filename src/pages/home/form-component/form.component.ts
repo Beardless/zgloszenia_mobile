@@ -72,8 +72,12 @@ export class FormComponent {
             if (this.imageProvider.getImages().length > 0){
                 this.upload(requestId);
             } else {
-                this.submitAttempt = false;
-                this.loading.dismiss();
+                this.sendProvider.sendMail(this.formProvider.get(), requestId).subscribe(
+                  data => {
+                    this.submitAttempt = false;
+                    this.loading.dismiss();
+                  }
+                );
             }
         }, err => {
             this.loading.dismiss();

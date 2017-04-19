@@ -18,4 +18,19 @@ export class SendProvider {
         )
         .map((res: Response) => res.json());
   }
+
+  sendMail(data, requestId) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this.http
+      .post(
+        'http://reporter.24wspolnota.pl/request/'+requestId+'/'+data.uniqueId+'/sendMail',
+        JSON.stringify(data),
+        options
+      )
+      .map((res: Response) => res.json());
+  }
+
+
 }
