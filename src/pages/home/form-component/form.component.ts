@@ -2,6 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { FormProvider } from  './../providers/form-provider';
 import { SendProvider } from './../providers/send-provider';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Storage } from '@ionic/storage';
 import { ImageProvider } from './../providers/image-provider';
 import { Transfer } from 'ionic-native';
 import { LoadingController } from 'ionic-angular';
@@ -38,6 +39,7 @@ export class FormComponent {
     loading: any;
 
     constructor(
+        public storage: Storage,
         public formProvider: FormProvider,
         public sendProvider: SendProvider,
         public formBuilder: FormBuilder,
@@ -45,16 +47,24 @@ export class FormComponent {
         public loadingCtrl: LoadingController
     ){
         this.sendForm = formBuilder.group({
-            message: ['', Validators.required],
-            name: [''],
-            email: [''],
-            select: ['']
+            message: [this.formProvider.get().message, Validators.required],
+            name: [this.formProvider.get().name],
+            email: [this.formProvider.get().email]
         });
 
-        // Show Loading popup
         this.loading = this.loadingCtrl.create({
             content: 'Wysyłanie...',
         });
+      this.storage.get('name').then((val) => {
+        if (null !== val) {
+            this.sendForm.patchValue({name: val});
+        }
+      })
+      this.storage.get('email').then((val) => {
+        if (null !== val) {
+          this.sendForm.patchValue({email: val});
+        }
+      })
     }
 
     upload(requestId){
@@ -87,13 +97,12 @@ export class FormComponent {
     send() {
         this.submitAttempt = true;
         if (this.sendForm.valid) {
+            this.storage.set('name', this.formProvider.get().name);
+            this.storage.set('email', this.formProvider.get().email);
             this.loading.present();
             this.sendProvider.send(this.formProvider.get()).subscribe(
                 data => {
                     this.formProvider.get().message = '';
-                    this.formProvider.get().name = null;
-                    this.formProvider.get().email = null;
-                    this.formProvider.get().select = null;
 
                     if (this.imageProvider.getImages().length > 0){
                         this.upload(data.requestId);

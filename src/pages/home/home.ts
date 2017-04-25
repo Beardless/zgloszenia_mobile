@@ -40,20 +40,4 @@ export class HomePage {
 
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
-
-  // send(data) {
-  //   console.log(this.formProvider);
-  //   this.sendProvider.send(data).subscribe(
-  //     data => {
-  //       console.log(data);
-  //       return true;
-  //     },
-  //     error => {
-  //       console.error("Error");
-  //       return Observable.throw(error);
-  //     }
-  //   );
-  //
-  // }
-
 }

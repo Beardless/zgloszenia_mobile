@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "Wspolnota Reporter",
+  "author": "Bartłomiej Mikołajczuk",
+  "homepage": "https://24wspolnota.pl/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",

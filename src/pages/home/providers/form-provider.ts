@@ -7,7 +7,7 @@ export class FormProvider {
     name: '',
     email: '',
     message: '',
-    select: '',
+    select: 'Temat na artykuł',
     uniqueId: '',
     city: '',
   };
