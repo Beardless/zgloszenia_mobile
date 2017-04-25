@@ -10,11 +10,13 @@ import { FormComponent } from '../pages/home/form-component/form.component';
 import { ImageComponent } from '../pages/home/image-component/image.component';
 import { FormProvider } from "../pages/home/providers/form-provider";
 import { ImageProvider } from '../pages/home/providers/image-provider';
+import { StartPage } from '../pages/start/start';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
+    StartPage,
     FormComponent,
     ImageComponent
   ],
@@ -29,6 +31,7 @@ import { ImageProvider } from '../pages/home/providers/image-provider';
   entryComponents: [
     MyApp,
     HomePage,
+    StartPage,
     FormComponent
   ],
   providers: [

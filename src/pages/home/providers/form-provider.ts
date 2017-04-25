@@ -8,7 +8,8 @@ export class FormProvider {
     email: '',
     message: '',
     select: '',
-    uniqueId: ''
+    uniqueId: '',
+    city: '',
   };
   constructor(public imageProvider: ImageProvider){
   }

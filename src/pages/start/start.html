@@ -1,0 +1,35 @@
+<ion-header padding>
+  <ion-title>
+    <img src="./assets/img/wspolnota.png" />
+  </ion-title>
+</ion-header>
+<ion-content padding>
+  <form [formGroup]="startForm">
+    <ion-item name="select"  [class.invalid]="!startForm.controls.select.valid && submitAttempt">
+      <ion-label>Temat:</ion-label>
+      <ion-select [(ngModel)]="this.formProvider.get().select" formControlName="select" (ionChange)="logEvent($event)">
+        <ion-option selected=”true”>Pupil</ion-option>
+        <ion-option>Noworodek</ion-option>
+        <ion-option>Zażalenie</ion-option>
+        <ion-option>Temat na artykuł</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item name="city" [class.invalid]="!startForm.controls.select.valid && submitAttempt">
+      <ion-label>Miasto:</ion-label>
+      <ion-select [(ngModel)]="this.formProvider.get().city" formControlName="city" (ionChange)="logEvent($event)">
+        <ion-option selected=”true”>Biała Podlaska</ion-option>
+        <ion-option>Łęczna</ion-option>
+        <ion-option>Lubartów</ion-option>
+        <ion-option>Łuków</ion-option>
+        <ion-option>Międzyrzec Podlaski</ion-option>
+        <ion-option>Opole Lubelskie</ion-option>
+        <ion-option>Parczew</ion-option>
+        <ion-option>Puławy</ion-option>
+        <ion-option>Radzyń Podlaski</ion-option>
+      </ion-select>
+    </ion-item>
+    <div text-center>
+      <button [disabled]="!buttonDisabled" (click)="pushPage()" ion-button round >Przejdź Dalej</button>
+    </div>
+  </form>
+</ion-content>

@@ -1,13 +1,4 @@
 <form [formGroup]="sendForm">
-  <ion-item>
-    <ion-label>Temat:</ion-label>
-    <ion-select [(ngModel)]="this.formProvider.get().select" formControlName="select">
-      <ion-option selected=”true”>Pupil</ion-option>
-      <ion-option>Noworodek</ion-option>
-      <ion-option>Zażalenie</ion-option>
-      <ion-option>Temat na artykuł</ion-option>
-    </ion-select>
-  </ion-item>
   <ion-item class="form-group">
     <ion-label stacked>Treść zgłoszenia(wymagane)</ion-label>
     <ion-textarea [(ngModel)]="this.formProvider.get().message" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
