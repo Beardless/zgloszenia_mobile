@@ -5,7 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { ImageProvider } from './../providers/image-provider';
 import { Transfer } from 'ionic-native';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, AlertController } from 'ionic-angular';
+import { HockeyApp } from 'ionic-hockeyapp';
 
 @Component({
     selector: 'form-component',
@@ -44,7 +45,9 @@ export class FormComponent {
         public sendProvider: SendProvider,
         public formBuilder: FormBuilder,
         public imageProvider: ImageProvider,
-        public loadingCtrl: LoadingController
+        public loadingCtrl: LoadingController,
+        private alertCtrl: AlertController,
+        public hockeyApp: HockeyApp
     ){
         this.sendForm = formBuilder.group({
             message: [this.formProvider.get().message, Validators.required],
@@ -67,6 +70,15 @@ export class FormComponent {
       })
     }
 
+    presentAlert() {
+      let alert = this.alertCtrl.create({
+        title: 'Dziękujemy',
+        subTitle: 'Dziękujemy Twoje zgłoszenie zostało dostarczone do redakcji',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+
     upload(requestId){
         var image = this.imageProvider.getImages()[0];
         const fileTransfer = new Transfer();
@@ -79,13 +91,17 @@ export class FormComponent {
             params : {'fileName': 'test_name'}
         }).then(data => {
             this.imageProvider.remove(0);
-            if (this.imageProvider.getImages().length > 0){
+            this.hockeyApp.trackEvent('Send photo');
+          if (this.imageProvider.getImages().length > 0){
                 this.upload(requestId);
             } else {
                 this.sendProvider.sendMail(this.formProvider.get(), requestId).subscribe(
                   data => {
                     this.submitAttempt = false;
                     this.loading.dismiss();
+                    this.presentAlert();
+                    this.hockeyApp.trackEvent('Send email');
+                    this.formProvider.get().message = '';
                   }
                 );
             }
@@ -102,13 +118,13 @@ export class FormComponent {
             this.loading.present();
             this.sendProvider.send(this.formProvider.get()).subscribe(
                 data => {
-                    this.formProvider.get().message = '';
-
+                    this.hockeyApp.trackEvent('Send request');
                     if (this.imageProvider.getImages().length > 0){
                         this.upload(data.requestId);
                     } else {
                         this.submitAttempt = false;
                         this.loading.dismiss();
+                        this.presentAlert();
                     }
                 },
                 error => {

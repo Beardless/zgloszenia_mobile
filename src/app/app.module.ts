@@ -11,6 +11,8 @@ import { ImageComponent } from '../pages/home/image-component/image.component';
 import { FormProvider } from "../pages/home/providers/form-provider";
 import { ImageProvider } from '../pages/home/providers/image-provider';
 import { StartPage } from '../pages/start/start';
+import { HockeyApp } from 'ionic-hockeyapp';
+
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { StartPage } from '../pages/start/start';
   providers: [
     ImageProvider,
     FormProvider,
+    HockeyApp,
     {provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

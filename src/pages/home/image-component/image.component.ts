@@ -2,6 +2,8 @@ import { Component, Injectable } from '@angular/core';
 import { Camera } from 'ionic-native';
 import { ImageProvider } from "../providers/image-provider";
 import { ActionSheetController } from 'ionic-angular';
+import { HockeyApp } from 'ionic-hockeyapp';
+
 
 @Injectable()
 @Component({
@@ -13,6 +15,7 @@ export class ImageComponent {
   constructor(
       public imageProvider: ImageProvider,
       public actionSheetCtrl: ActionSheetController,
+      public hockeyApp: HockeyApp
       ){}
 
   takePicture(sourceType){
@@ -40,12 +43,14 @@ export class ImageComponent {
           icon: 'camera',
           handler: () => {
             this.takePicture(Camera.PictureSourceType.CAMERA);
+            this.hockeyApp.trackEvent('Photo selected from Camera');
           }
         },{
           text: 'Galeria',
           icon: 'photos',
           handler: () => {
             this.takePicture(Camera.PictureSourceType.SAVEDPHOTOALBUM);
+            this.hockeyApp.trackEvent('Photo selected from PhotoAlbum');
           }
         },{
           text: 'Anuluj',
