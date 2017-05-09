@@ -83,7 +83,7 @@ export class FormComponent {
         var image = this.imageProvider.getImages()[0];
         const fileTransfer = new Transfer();
 
-        fileTransfer.upload(image.filePath, "http://reporter.24wspolnota.pl/request/"+requestId, {
+        fileTransfer.upload(image.filePath, "https://reporter.24wspolnota.pl/request/"+requestId, {
             fileKey: "file",
             fileName: 'image'+this.imageProvider.getImages().length+'.jpg',
             chunkedMode: false,
