@@ -92,13 +92,13 @@ export class FormComponent {
         }).then(data => {
             this.imageProvider.remove(0);
             this.hockeyApp.trackEvent('Send photo');
-          if (this.imageProvider.getImages().length > 0){
+            if (this.imageProvider.getImages().length > 0){
                 this.upload(requestId);
             } else {
                 this.sendProvider.sendMail(this.formProvider.get(), requestId).subscribe(
                   data => {
                     this.submitAttempt = false;
-                    this.loading.dismiss();
+                    this.loading.dismiss().catch(() => {});
                     this.presentAlert();
                     this.hockeyApp.trackEvent('Send email');
                     this.formProvider.get().message = '';
@@ -106,7 +106,7 @@ export class FormComponent {
                 );
             }
         }, err => {
-            this.loading.dismiss();
+          this.loading.dismiss().catch(() => {});
         });
     }
 
@@ -115,16 +115,22 @@ export class FormComponent {
         if (this.sendForm.valid) {
             this.storage.set('name', this.formProvider.get().name);
             this.storage.set('email', this.formProvider.get().email);
-            this.loading.present();
+            this.loading.present().catch(() => {});
             this.sendProvider.send(this.formProvider.get()).subscribe(
                 data => {
                     this.hockeyApp.trackEvent('Send request');
                     if (this.imageProvider.getImages().length > 0){
                         this.upload(data.requestId);
                     } else {
-                        this.submitAttempt = false;
-                        this.loading.dismiss();
-                        this.presentAlert();
+                        this.sendProvider.sendMail(this.formProvider.get(), data.requestId).subscribe(
+                          data => {
+                            this.submitAttempt = false;
+                            this.loading.dismiss().catch(() => {});
+                            this.presentAlert();
+                            this.hockeyApp.trackEvent('Send email');
+                            this.formProvider.get().message = '';
+                          }
+                        );
                     }
                 },
                 error => {
