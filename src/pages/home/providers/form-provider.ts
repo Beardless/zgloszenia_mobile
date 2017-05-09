@@ -11,10 +11,20 @@ export class FormProvider {
     uniqueId: '',
     city: '',
   };
+
   constructor(public imageProvider: ImageProvider){
   }
 
-  get(){
+  getAll(){
     return this.request;
+  }
+
+  get (name){
+    return this.request[name];
   };
+
+  set (name, value){
+      this.request[name] = value;
+  }
+
 }

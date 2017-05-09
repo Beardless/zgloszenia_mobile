@@ -22,7 +22,7 @@ export class HomePage {
     ) {
     platform.ready().then((readySource) => {
         storage.get('userId').then((val) => {
-        this.formProvider.get().uniqueId = val;
+        this.formProvider.set('uniqueId', val);
         console.log(this.uniqueId);
         if (null === val) {
           storage.set('userId', this.uniqueId);

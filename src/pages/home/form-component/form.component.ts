@@ -50,9 +50,9 @@ export class FormComponent {
         public hockeyApp: HockeyApp
     ){
         this.sendForm = formBuilder.group({
-            message: [this.formProvider.get().message, Validators.required],
-            name: [this.formProvider.get().name],
-            email: [this.formProvider.get().email]
+            message: [this.formProvider.get('message'), Validators.required],
+            name: [this.formProvider.get('name')],
+            email: [this.formProvider.get('name')]
         });
 
         this.loading = this.loadingCtrl.create({
@@ -95,13 +95,13 @@ export class FormComponent {
           if (this.imageProvider.getImages().length > 0){
                 this.upload(requestId);
             } else {
-                this.sendProvider.sendMail(this.formProvider.get(), requestId).subscribe(
+                this.sendProvider.sendMail(this.formProvider.getAll(), requestId).subscribe(
                   data => {
                     this.submitAttempt = false;
                     this.loading.dismiss();
                     this.presentAlert();
                     this.hockeyApp.trackEvent('Send email');
-                    this.formProvider.get().message = '';
+                    this.formProvider.set('message', '');
                   }
                 );
             }
@@ -113,10 +113,10 @@ export class FormComponent {
     send() {
         this.submitAttempt = true;
         if (this.sendForm.valid) {
-            this.storage.set('name', this.formProvider.get().name);
-            this.storage.set('email', this.formProvider.get().email);
+            this.storage.set('name', this.formProvider.get('name'));
+            this.storage.set('email', this.formProvider.get('email'));
             this.loading.present();
-            this.sendProvider.send(this.formProvider.get()).subscribe(
+            this.sendProvider.send(this.formProvider.getAll()).subscribe(
                 data => {
                     this.hockeyApp.trackEvent('Send request');
                     if (this.imageProvider.getImages().length > 0){

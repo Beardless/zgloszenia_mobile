@@ -2,7 +2,7 @@
 <form [formGroup]="sendForm">
   <ion-item class="form-group">
     <ion-label stacked>Treść zgłoszenia(wymagane)</ion-label>
-    <ion-textarea [(ngModel)]="this.formProvider.get().message" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
+    <ion-textarea [ngModel]="this.formProvider.get('message')" (ngModelChange)="this.formProvider.set('message', $event)" name="message" formControlName="message" [class.invalid]="!sendForm.controls.message.valid && submitAttempt" rows="4"></ion-textarea>
   </ion-item>
   <ion-item *ngIf="!sendForm.controls.message.valid  && submitAttempt"
        class="alert">
@@ -10,15 +10,15 @@
   </ion-item>
   <ion-item class="form-group">
     <ion-label stacked>Imię</ion-label>
-    <ion-input [(ngModel)]="this.formProvider.get().name" name="name" formControlName="name" type="text"></ion-input>
+    <ion-input [ngModel]="this.formProvider.get('name')" (ngModelChange)="this.formProvider.set('name', $event)" name="name" formControlName="name" type="text"></ion-input>
   </ion-item>
   <ion-item class="form-group">
     <ion-label stacked>Email</ion-label>
-    <ion-input [(ngModel)]="this.formProvider.get().email" name="email" formControlName="email" type="email"></ion-input>
+    <ion-input [ngModel]="this.formProvider.get('email')" (ngModelChange)="this.formProvider.set('email', $event)" name="email" formControlName="email" type="email"></ion-input>
   </ion-item>
   <ion-footer class="bottom_bar">
     <ion-fab center bottom>
-      <button ion-fab color="danger" (click)="send(this.formProvider.get())">Wyślij</button>
+      <button ion-fab color="danger" (click)="send(this.formProvider.getAll())">Wyślij</button>
     </ion-fab>
   </ion-footer>
 </form>

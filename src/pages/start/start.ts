@@ -22,13 +22,13 @@ export class StartPage {
     public formProvider: FormProvider
   ){
     this.startForm = formBuilder.group({
-      select: [this.formProvider.get().select, Validators.required],
-      city: [this.formProvider.get().city, Validators.required]
+      select: [this.formProvider.get('select'), Validators.required],
+      city: [this.formProvider.get('city'), Validators.required]
     });
 
     this.storage.get('city').then((val) => {
       if (null !== val) {
-        this.startForm.setValue({'city': val, 'select': this.formProvider.get().select});
+        this.startForm.setValue({'city': val, 'select': this.formProvider.get('select')});
       }
 
       if (this.startForm.valid){
@@ -48,8 +48,8 @@ export class StartPage {
     this.submitAttempt = true;
     if(this.startForm.valid) {
       this.navCtrl.push(HomePage);
-      console.log(this.formProvider.get().select);
-      console.log(this.formProvider.get().city);
+      console.log(this.formProvider.get('select'));
+      console.log(this.formProvider.get('city'));
       console.log(this.startForm.value.city);
       this.storage.set('city', this.startForm.value.city);
     } else {
