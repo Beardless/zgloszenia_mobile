@@ -12,7 +12,7 @@ export class SendProvider {
 
     return this.http
         .post(
-            'http://reporter.24wspolnota.pl/request/',
+            'https://reporter.24wspolnota.pl/request/',
             JSON.stringify(data),
             options
         )
@@ -25,7 +25,7 @@ export class SendProvider {
 
     return this.http
       .post(
-        'http://reporter.24wspolnota.pl/request/'+requestId+'/'+data.uniqueId+'/sendMail',
+        'https://reporter.24wspolnota.pl/request/'+requestId+'/'+data.uniqueId+'/sendMail',
         JSON.stringify(data),
         options
       )
