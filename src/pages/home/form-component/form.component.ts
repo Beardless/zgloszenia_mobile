@@ -58,16 +58,18 @@ export class FormComponent {
         this.loading = this.loadingCtrl.create({
             content: 'Wysyłanie...',
         });
-      this.storage.get('name').then((val) => {
-        if (null !== val) {
-            this.sendForm.patchValue({name: val});
-        }
-      })
-      this.storage.get('email').then((val) => {
-        if (null !== val) {
-          this.sendForm.patchValue({email: val});
-        }
-      })
+
+        this.storage.get('name').then((val) => {
+          if (null !== val) {
+              this.sendForm.patchValue({name: val});
+          }
+        });
+
+        this.storage.get('email').then((val) => {
+          if (null !== val) {
+            this.sendForm.patchValue({email: val});
+          }
+        })
     }
 
     presentAlert() {
