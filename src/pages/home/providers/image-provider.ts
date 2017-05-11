@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ToastController, Platform} from 'ionic-angular';
+import { ToastController} from 'ionic-angular';
 import { FilePath, File } from 'ionic-native';
 
-declare var cordova: any;
+declare const cordova: any;
 
 @Injectable()
 export class ImageProvider {
@@ -13,10 +13,7 @@ export class ImageProvider {
   constructor(
     public sanitizer: DomSanitizer,
     public toastCtrl: ToastController,
-    public platform: Platform
   ){}
-
-  lastImage: string = null
 
   public getImages()
   {

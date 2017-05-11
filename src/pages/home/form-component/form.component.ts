@@ -1,6 +1,6 @@
 import { Component, Injectable } from '@angular/core';
 import { FormProvider } from  './../providers/form-provider';
-import { SendProvider } from './../providers/send-provider';
+import { SendProvider } from '../services/send-services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { ImageProvider } from './../providers/image-provider';
@@ -58,16 +58,16 @@ export class FormComponent {
         this.loading = this.loadingCtrl.create({
             content: 'Wysyłanie...',
         });
-      this.storage.get('name').then((val) => {
-        if (null !== val) {
-            this.sendForm.patchValue({name: val});
-        }
-      })
-      this.storage.get('email').then((val) => {
-        if (null !== val) {
-          this.sendForm.patchValue({email: val});
-        }
-      })
+        this.storage.get('name').then((val) => {
+          if (null !== val) {
+              this.sendForm.patchValue({name: val});
+          }
+        });
+        this.storage.get('email').then((val) => {
+          if (null !== val) {
+            this.sendForm.patchValue({email: val});
+          }
+        })
     }
 
     presentAlert() {
@@ -79,8 +79,8 @@ export class FormComponent {
       alert.present();
     }
 
-    upload(requestId){
-        var image = this.imageProvider.getImages()[0];
+    sendPhotos(requestId){
+        let image = this.imageProvider.getImages()[0];
         const fileTransfer = new Transfer();
 
         fileTransfer.upload(image.filePath, "http://reporter.24wspolnota.pl/request/"+requestId, {
@@ -93,7 +93,7 @@ export class FormComponent {
             this.imageProvider.remove(0);
             this.hockeyApp.trackEvent('Send photo');
           if (this.imageProvider.getImages().length > 0){
-                this.upload(requestId);
+                this.sendPhotos(requestId);
             } else {
                 this.sendProvider.sendMail(this.formProvider.getAll(), requestId).subscribe(
                   data => {
@@ -106,6 +106,7 @@ export class FormComponent {
                 );
             }
         }, err => {
+            console.log(err);
             this.loading.dismiss();
         });
     }
@@ -116,7 +117,7 @@ export class FormComponent {
             this.storage.set('name', this.formProvider.get('name'));
             this.storage.set('email', this.formProvider.get('email'));
             this.loading.present();
-            this.sendProvider.send(this.formProvider.getAll()).subscribe(
+            this.sendProvider.sendRequest(this.formProvider.getAll()).subscribe(
                 data => {
                     this.hockeyApp.trackEvent('Send request');
                     if (this.imageProvider.getImages().length > 0){

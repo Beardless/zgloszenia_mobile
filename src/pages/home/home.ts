@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { FormProvider } from  './providers/form-provider';
-import { ImageProvider } from './providers/image-provider';
 import { FormComponent } from './form-component/form.component';
-import { SendProvider } from './providers/send-provider';
+import { SendProvider } from './services/send-services';
 
 
 @Component({
@@ -18,11 +17,10 @@ export class HomePage {
     storage: Storage,
     platform: Platform,
     public formProvider: FormProvider,
-    public imageProvider: ImageProvider
     ) {
     platform.ready().then((readySource) => {
         storage.get('userId').then((val) => {
-        this.formProvider.set('uniqueId', val);
+        this.formProvider.getAll().uniqueId = val;
         console.log(this.uniqueId);
         if (null === val) {
           storage.set('userId', this.uniqueId);

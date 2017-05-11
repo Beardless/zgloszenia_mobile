@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 export class SendProvider {
   constructor(private http: Http) {}
 
-  send(data) {
+  sendRequest(data) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
