@@ -121,7 +121,7 @@ export class FormComponent {
                 data => {
                     this.hockeyApp.trackEvent('Send request');
                     if (this.imageProvider.getImages().length > 0){
-                        this.upload(data.requestId);
+                        this.sendPhotos(data.requestId);
                     } else {
                         this.submitAttempt = false;
                         this.loading.dismiss();
